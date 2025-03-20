@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game 2 Main Menu</title>
+    <style>
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire screen */
+            z-index: -1; /* Places the video behind the content */
+            filter: blur(10px); /* Apply blur effect */
+        }
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        /* Button Styles */
+        button {
+            padding: 12px 24px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Form Styles */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 250px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 8px rgba(72, 216, 72, 0.5);
+        }
+
+        .submit-btn {
+            padding: 12px 24px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            button {
+                width: 100%;
+                margin: 10px 0;
+            }
+            input[type="text"] {
+                width: 90%;
+            }
+        }
+
+        #roundContent {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Video Background -->
+    <video id="background-video" autoplay loop muted>
+        <source src="Terrain Video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div>
+        <h1>Welcome to the Game!</h1>
+        <h2>Select a Round to Play</h2>
+        <div>
+            <button onclick="showRound('round1')">Round 1</button>
+            <button onclick="showRound('round2')">Round 2</button>
+            <button onclick="showRound('round3')">Round 3</button>
+            <button onclick="showRound('trial')">Trial</button>
+        </div>
+
+        <div id="roundContent"></div>
+    </div>
+
+    <script>
+        function showRound(round) {
+            let content = '';
+            switch (round) {
+                case 'round1':
+                    content = `
+                        <h1>REGROUP!</h1>
+                        <div class="form-container">
+                            <label for="name1">Name:</label>
+                            <input type="text" id="name1" name="name" required>
+                            <button class="submit-btn" id="submitButton1">Join</button>
+                            <p id="result1"></p>
+                        </div>
+                    `;
+                    break;
+                case 'round2':
+                    content = `
+                        <h1>REGROUP!</h1>
+                        <div class="form-container">
+                            <label for="name2">Name:</label>
+                            <input type="text" id="name2" name="name" required>
+                            <button class="submit-btn" id="submitButton2">Join</button>
+                            <p id="result2"></p>
+                        </div>
+                    `;
+                    break;
+                case 'round3':
+                    content = `
+                        <h1>REGROUP!</h1>
+                        <div class="form-container">
+                            <label for="name3">Name:</label>
+                            <input type="text" id="name3" name="name" required>
+                            <button class="submit-btn" id="submitButton3">Join</button>
+                            <p id="result3"></p>
+                        </div>
+                    `;
+                    break;
+                case 'trial':
+                    content = `
+                        <h1>REGROUP!</h1>
+                        <div class="form-container">
+                            <label for="nameTrial">Name:</label>
+                            <input type="text" id="nameTrial" name="name" required>
+                            <button class="submit-btn" id="submitButtonTrial">Join</button>
+                            <p id="resultTrial"></p>
+                        </div>
+                    `;
+                    break;
+            }
+            document.getElementById('roundContent').innerHTML = content;
+            executeScripts(round);
+        }
+
+        function executeScripts(round) {
+            switch (round) {
+                case 'round1':
+                    const categories1 = ['Cat', 'Dog', 'Chicken', 'Snake', 'Bird'];
+                    let categoryCounts1 = categories1.map(category => ({ category, count: 0 }));
+                    let assignedNames1 = new Set();
+
+                    document.getElementById('submitButton1').addEventListener('click', function(event) {
+                        event.preventDefault();
+                        let name = document.getElementById('name1').value;
+
+                        if (assignedNames1.has(name)) {
+                            document.getElementById('result1').innerText = 'You have already been assigned a category.';
+                            return;
+                        }
+
+                        let minCount = Math.min(...categoryCounts1.map(c => c.count));
+                        let leastAssignedCategories = categoryCounts1.filter(c => c.count === minCount);
+                        let randomIndex = Math.floor(Math.random() * leastAssignedCategories.length);
+                        let assignedCategory = leastAssignedCategories[randomIndex].category;
+
+                        categoryCounts1.find(c => c.category === assignedCategory).count++;
+                        assignedNames1.add(name);
+
+                        document.getElementById('result1').innerText = 'Hello, ' + name + '! You have been assigned to ' + assignedCategory + '.';
+                        document.querySelector('#submitButton1').disabled = true;
+                    });
+                    break;
+
+                case 'round2':
+                    const categories2 = ['Chicken Rice', 'Prata', 'Nasi Lemak', 'Big Breakfast'];
+                    let categoryCounts2 = categories2.map(category => ({ category, count: 0 }));
+                    let assignedNames2 = new Set();
+
+                    document.getElementById('submitButton2').addEventListener('click', function(event) {
+                        event.preventDefault();
+                        let name = document.getElementById('name2').value;
+
+                        if (assignedNames2.has(name)) {
+                            document.getElementById('result2').innerText = 'You have already been assigned a category.';
+                            return;
+                        }
+
+                        let minCount = Math.min(...categoryCounts2.map(c => c.count));
+                        let leastAssignedCategories = categoryCounts2.filter(c => c.count === minCount);
+                        let randomIndex = Math.floor(Math.random() * leastAssignedCategories.length);
+                        let assignedCategory = leastAssignedCategories[randomIndex].category;
+
+                        categoryCounts2.find(c => c.category === assignedCategory).count++;
+                        assignedNames2.add(name);
+
+                        document.getElementById('result2').innerText = 'Hello, ' + name + '! You have been assigned to ' + assignedCategory + '.';
+                        document.querySelector('#submitButton2').disabled = true;
+                    });
+                    break;
+
+                case 'round3':
+                    const categories3 = ['Trisha', 'Michan', 'Rosyad', 'Jesbell'];
+                    let categoryCounts3 = categories3.map(category => ({ category, count: 0 }));
+                    let assignedNames3 = new Set();
+
+                    document.getElementById('submitButton3').addEventListener('click', function(event) {
+                        event.preventDefault();
+                        let name = document.getElementById('name3').value;
+
+                        if (assignedNames3.has(name)) {
+                            document.getElementById('result3').innerText = 'You have already been assigned a category.';
+                            return;
+                        }
+
+                        let minCount = Math.min(...categoryCounts3.map(c => c.count));
+                        let leastAssignedCategories = categoryCounts3.filter(c => c.count === minCount);
+                        let randomIndex = Math.floor(Math.random() * leastAssignedCategories.length);
+                        let assignedCategory = leastAssignedCategories[randomIndex].category;
+
+                        categoryCounts3.find(c => c.category === assignedCategory).count++;
+                        assignedNames3.add(name);
+
+                        document.getElementById('result3').innerText = 'Hello, ' + name + '! You have been assigned to ' + assignedCategory + '.';
+                        document.querySelector('#submitButton3').disabled = true;
+                    });
+                    break;
+
+                case 'trial':
+                    const categoriesTrial = ['James Bond', 'Tom Cruise', 'Avangers', 'Superman'];
+                    let categoryCountsTrial = categoriesTrial.map(category => ({ category, count: 0 }));
+                    let assignedNamesTrial = new Set();
+
+                    document.getElementById('submitButtonTrial').addEventListener('click', function(event) {
+                        event.preventDefault();
+                        let name = document.getElementById('nameTrial').value;
+
+                        if (assignedNamesTrial.has(name)) {
+                            document.getElementById('resultTrial').innerText = 'You have already been assigned a category.';
+                            return;
+                        }
+
+                        let minCount = Math.min(...categoryCountsTrial.map(c => c.count));
+                        let leastAssignedCategories = categoryCountsTrial.filter(c => c.count === minCount);
+                        let randomIndex = Math.floor(Math.random() * leastAssignedCategories.length);
+                        let assignedCategory = leastAssignedCategories[randomIndex].category;
+
+                        categoryCountsTrial.find(c => c.category === assignedCategory).count++;
+                        assignedNamesTrial.add(name);
+
+                        document.getElementById('resultTrial').innerText = 'Hello, ' + name + '! You have been assigned to ' + assignedCategory + '.';
+                        document.querySelector('#submitButtonTrial').disabled = true;
+                    });
+                    break;
+            } 
+            
+        }
+    </script>
+</body>
+</html>
